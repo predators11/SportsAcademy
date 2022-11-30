@@ -1,0 +1,22 @@
+﻿@model IEnumerable<SportMembershipServiceModel>
+
+@{
+    ViewBag.Title = "My Memberships";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+@if (Model.Any())
+{
+    <div class="row">
+        @foreach (var membership in Model)
+        {
+            <partial name="_SportMembershipPartial" model="@membership" />
+        }
+    </div>
+}
+else
+{
+    <h3 class="text-center">You have no memberships yet!</h3>
+}

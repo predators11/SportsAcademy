@@ -1,0 +1,60 @@
+﻿@model SportMembershipDetailsModel
+
+@{
+    ViewBag.Title = "Membership Details";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="container" style="display:inline">
+    <div class="row">
+        <div class="col-4">
+            <img class="card-img-top" style="width: 20rem;"
+                 src="@Model.ImageUrl" alt="Membership Image">
+        </div>
+        <div class="card col-8 border-0">
+            <p style="font-size:25px;"><u>@Model.Title</u></p>
+            <p>
+                Price Per Month:
+                <b>@String.Format("{0:f2}", Model.PricePerMonth) BGN</b>
+            </p>
+            <p>@Model.Description</p>
+            <p>Category: <b>@Model.Category</b></p>
+            <p><i>(@(Model.IsBought ? "Bought" : "Not Bought"))</i></p>
+            <div class="form-inline">
+                @if (this.User.Identity.IsAuthenticated)
+                {
+                    <a class="btn btn-warning" asp-controller="SportMembership" asp-action="Edit"
+                       asp-route-id="@Model.Id">Edit</a>
+                    <a class="ml-2 btn btn-danger" asp-controller="SportMembership" asp-action="Delete"
+                       asp-route-id="@Model.Id">Delete</a>
+                    @if (!Model.IsBought)
+                    {
+                        <form class="ml-2" asp-controller="SportMembership"
+                              asp-action="Buy" asp-route-id="@Model.Id" method="post">
+                            <input class="btn btn-primary" type="submit" value="Buy" />
+                        </form>
+                    }
+                    else
+                    {
+                        <form class="ml-2" asp-controller="SportMembership" asp-action="Cancel"
+                              asp-route-id="@Model.Id" method="post">
+                            <input class="btn btn-primary" type="submit" value="Cancel" />
+                        </form>
+                    }
+                }
+            </div>
+            <p></p>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Member Info</h5>
+                    <p class="card-text">First Name:  @Model.Member.FirstName</p>
+                    <p class="card-text">Last Name:  @Model.Member.LastName</p>
+                    <p class="card-text">Email:  @Model.Member.Email</p>
+                    <p class="card-text">Phone Number: @Model.Member.PhoneNumber</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

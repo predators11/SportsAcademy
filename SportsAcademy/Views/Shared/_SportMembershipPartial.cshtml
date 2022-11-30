@@ -1,0 +1,40 @@
+﻿@model SportMembershipServiceModel
+
+<div class="col-md-4">
+    <div class="card mb-3">
+        <img class="card-img-top" src="@Model.ImageUrl" alt="Membership Image">
+        <div class="card-body text-center">
+            <h4>@Model.Title</h4>
+            <h6>
+                Price Per Month:
+                <b>@String.Format("{0:f2}", Model.PricePerMonth) BGN</b>
+            </h6>
+            <h6>(@(Model.IsBought ? "Bought" : "Not Bought"))</h6>
+            <br />
+            <a asp-controller="SportMembership" asp-action="Details" asp-route-id="@Model.Id"
+               class="btn btn-success">Details</a>
+            @if (this.User.Identity.IsAuthenticated)
+            {
+                <a asp-controller="SportMembership" asp-action="Edit" asp-route-id="@Model.Id"
+               class="btn btn-warning">Edit</a>
+                <a asp-controller="SportMembership" asp-action="Delete" asp-route-id="@Model.Id"
+               class="btn btn-danger">Delete</a>
+                <p></p>
+                @if (!Model.IsBought)
+                {
+                    <form class="input-group-sm" asp-controller="SportMembership"
+                  asp-action="Buy" asp-route-id="@Model.Id" method="post">
+                        <input class="btn btn-primary" type="submit" value="Buy" />
+                    </form>
+                }
+                else
+                {
+                    <form asp-controller="SportMembership" asp-action="Cancel"
+                  asp-route-id="@Model.Id" method="post">
+                        <input class="btn btn-primary" type="submit" value="Cancel" />
+                    </form>
+                }
+            }
+        </div>
+    </div>
+</div>

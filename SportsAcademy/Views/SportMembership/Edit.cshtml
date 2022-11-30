@@ -1,0 +1,15 @@
+﻿@model SportMembershipModel
+
+@{
+    ViewBag.Title = "Edit Membership";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<partial name="_SportMembershipFormPartial" model="@Model" />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
