@@ -11,8 +11,8 @@
             </h6>
             <h6>(@(Model.IsBought ? "Bought" : "Not Bought"))</h6>
             <br />
-            <a asp-controller="SportMembership" asp-action="Details" asp-route-id="@Model.Id"
-               class="btn btn-success">Details</a>
+            <a asp-controller="SportMembership" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-success">Details</a>
+               
             @if (this.User.Identity.IsAuthenticated)
             {
                 <a asp-controller="SportMembership" asp-action="Edit" asp-route-id="@Model.Id"

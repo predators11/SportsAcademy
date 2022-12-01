@@ -23,7 +23,7 @@ namespace SportsAcademy.Core.Services
                 {
                     Id = s.Id,
                     ImageUrl = s.ImageUrl,
-                    Title = s.Title
+                    Title = s.Title,
                 })
                 .Take(3)
                 .ToListAsync();

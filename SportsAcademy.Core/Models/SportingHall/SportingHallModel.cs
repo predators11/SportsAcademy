@@ -1,4 +1,6 @@
-﻿namespace SportsAcademy.Core.Models.SportingHall
+﻿using SportsAcademy.Core.Contracts;
+
+namespace SportsAcademy.Core.Models.SportingHall
 {
     public class SportingHallModel
     {

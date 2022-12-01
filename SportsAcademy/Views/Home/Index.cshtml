@@ -34,6 +34,10 @@
                 <img class="d-block w-100" style="height:500px"
                     src="@membership.ImageUrl" alt="@membership.Title">
                 <div class="carousel-caption d-none d-md-block">
+                    <h5>
+                        <a class="btn btn-primary" asp-controller="SportMembership" asp-action="Details"
+                       asp-route-id="@membership.Id" > @membership.Title</a>
+                    </h5>
                 </div>
             </div>
 
