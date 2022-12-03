@@ -2,6 +2,7 @@
 using SportsAcademy.Core.Contracts;
 using SportsAcademy.Models;
 using System.Diagnostics;
+using static SportsAcademy.Areas.Admin.Constants.AdminConstants;
 
 namespace SportsAcademy.Controllers
 {
@@ -16,6 +17,11 @@ namespace SportsAcademy.Controllers
 
         public async Task<IActionResult> Index()
         {
+            if (User.IsInRole(AdminRolleName))
+            {
+                return RedirectToAction("Index", "Admin", new { area = "Admin" });
+            }
+
             var model = await sportingHallservice.BestSportingHalls();
 
             return View(model);

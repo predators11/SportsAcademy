@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SportsAcademy.Core.Contracts;
 using SportsAcademy.Core.Models.SportMembership;
 using SportsAcademy.Extensions;
+using static SportsAcademy.Areas.Admin.Constants.AdminConstants;
 
 namespace SportsAcademy.Controllers
 {
@@ -39,6 +40,11 @@ namespace SportsAcademy.Controllers
 
         public async Task<IActionResult> Mine()
         {
+            if (User.IsInRole(AdminRolleName))
+            {
+                return RedirectToAction("Mine", "SportMembership", new { area = AreaName });
+            }
+
             IEnumerable<SportMembershipServiceModel> myMemberships;
             var userId = User.Id();
 
@@ -119,7 +125,12 @@ namespace SportsAcademy.Controllers
                 return RedirectToAction(nameof(All));
             }
 
-            if ((await sportMembershipService.HasMemberWithId(id, User.Id())) == false)
+            if (!User.IsInRole(AdminRolleName) && (await sportMembershipService.HasMemberWithId(id, User.Id())) == false)
+            {
+                return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
+            }
+
+            if (await sportMembershipService.IsBought(id) == true)
             {
                 return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
             }
@@ -157,7 +168,12 @@ namespace SportsAcademy.Controllers
                 return View(model);
             }
 
-            if ((await sportMembershipService.HasMemberWithId(model.Id, User.Id())) == false)
+            if (!User.IsInRole(AdminRolleName) && (await sportMembershipService.HasMemberWithId(model.Id, User.Id())) == false)
+            {
+                return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
+            }
+
+            if (await sportMembershipService.IsBought(id) == true)
             {
                 return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
             }
@@ -190,7 +206,7 @@ namespace SportsAcademy.Controllers
                 return RedirectToAction(nameof(All));
             }
 
-            if ((await sportMembershipService.HasMemberWithId(id, User.Id())) == false)
+            if (!User.IsInRole(AdminRolleName))
             {
                 return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
             }
@@ -215,7 +231,7 @@ namespace SportsAcademy.Controllers
                 return RedirectToAction(nameof(All));
             }
 
-            if ((await sportMembershipService.HasMemberWithId(id, User.Id())) == false)
+            if (!User.IsInRole(AdminRolleName))
             {
                 return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
             }
@@ -232,11 +248,6 @@ namespace SportsAcademy.Controllers
             {
                 return RedirectToAction(nameof(All));
             }
-
-            //if (await memberService.ExistsById(User.Id()))
-            //{
-            //    return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
-            //}
 
             if (await sportMembershipService.IsBought(id))
             {
@@ -257,10 +268,10 @@ namespace SportsAcademy.Controllers
                 return RedirectToAction(nameof(All));
             }
 
-            //if ((await sportMembershipService.IsBoughtByUserWithId(id, User.Id())) == false)
-            //{
-            //    return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
-            //}
+            if (!User.IsInRole(AdminRolleName))
+            {
+                return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
+            }
 
             await sportMembershipService.Cancel(id);
 

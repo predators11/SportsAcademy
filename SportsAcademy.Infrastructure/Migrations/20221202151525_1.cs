@@ -28,6 +28,9 @@ namespace SportsAcademy.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -291,11 +294,11 @@ namespace SportsAcademy.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "IsActive", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e", 0, "b5fa9518-2c15-4dd3-9045-0c27eaabdf33", "guest@mail.com", false, false, null, "guest@mail.com", "guest@mail.com", "AQAAAAEAACcQAAAAEOtduMato9WLfNNpyyUrAF13f8nI84UVJN8E3S3kwT9Qirun1oEOhL8A2b2j8NNDYg==", null, false, "b688dc96-ed61-4d0a-892e-bb368b5b0f97", false, "guest@mail.com" },
-                    { "dea12856-c198-4129-b3f3-b893d8395082", 0, "dfbbc47e-5e0d-43b1-bd13-598bb84e4588", "player@mail.com", false, false, null, "player@mail.com", "player@mail.com", "AQAAAAEAACcQAAAAEL3j0BUH+MWsFf3NpLsUxJ1fUOJUDOqEd/alF21UFF5CiavcRhx35HQwEhRm3jGi7g==", null, false, "2cec1878-9013-4c3a-a1ba-b313b15ed0bf", false, "player@mail.com" }
+                    { "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e", 0, "4b1d944a-9dec-47a2-b9ff-e6b0426cb512", "guest@mail.com", false, null, true, null, false, null, "guest@mail.com", "guest@mail.com", "AQAAAAEAACcQAAAAEDlOnON2xF4ldN3ZLg8HllfPPD+qtx32eyYSTnsWZnfrJfcDiQFMFSFSYLay1EAbaA==", null, false, null, false, "guest@mail.com" },
+                    { "dea12856-c198-4129-b3f3-b893d8395082", 0, "628c4873-d174-4e31-82fe-2f2181c9f73c", "member@mail.com", false, null, true, null, false, null, "member@mail.com", "member@mail.com", "AQAAAAEAACcQAAAAELSoE3BsIO7aSeyEvhbsJJQmkXujbhKo4AYUb2/V0Xt26yct2kbl4ilJSGWcn6dUgw==", null, false, null, false, "member@mail.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -350,17 +353,17 @@ namespace SportsAcademy.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "SportMemberships",
                 columns: new[] { "Id", "BuyerId", "CategoryId", "Description", "ImageUrl", "IsActive", "MemberId", "PricePerMonth", "Title" },
-                values: new object[] { 1, "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e", 1, "Playing for 1 month with suitable trainer with maximum 2 hours a day", "https://app.anglo-link.com/uploads/monthly_2017_10/silver_store.png.740319ddc9e559ccb5dc1fc708ee2c1b.png", true, 1, 50m, "Table Tennis Membership" });
+                values: new object[] { 1, "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e", 1, "Playing for 1 month with suitable trainer with maximum 2 hours a day", "https://uploads-ssl.webflow.com/5e71b829d37a8158f8643ac3/5e7e3d6fdf522d8b72159b02_rackets-merged.png", true, 1, 50m, "Table Tennis Membership" });
 
             migrationBuilder.InsertData(
                 table: "SportMemberships",
                 columns: new[] { "Id", "BuyerId", "CategoryId", "Description", "ImageUrl", "IsActive", "MemberId", "PricePerMonth", "Title" },
-                values: new object[] { 2, null, 2, "Playing for 1 month with suitable trainer you with maximum 2 hours a day", "https://www.epsb.co.uk/wp-content/uploads/gold-membership1.png", true, 1, 60m, "Futsal Membership" });
+                values: new object[] { 2, null, 2, "Playing for 1 month with suitable trainer you with maximum 2 hours a day", "https://images.squarespace-cdn.com/content/v1/5fb46909e6fc155f519f8ee1/c0d2fe31-f621-470b-ad71-2a2813ef3e0d/DSCF0321.jpg", true, 1, 60m, "Futsal Membership" });
 
             migrationBuilder.InsertData(
                 table: "SportMemberships",
                 columns: new[] { "Id", "BuyerId", "CategoryId", "Description", "ImageUrl", "IsActive", "MemberId", "PricePerMonth", "Title" },
-                values: new object[] { 3, null, 3, "Shooting for 1 month with suitable trainer you with maximum 2 hours a day", "https://cdn.shpy.in/79267/1632516965209_SKU-0049_0?", true, 1, 70m, "Archery Membership" });
+                values: new object[] { 3, null, 3, "Shooting for 1 month with suitable trainer you with maximum 2 hours a day", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZGUej8azFt2SwL96yk2qblXY70diU3zEbOA&usqp=CAU", true, 1, 70m, "Archery Membership" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

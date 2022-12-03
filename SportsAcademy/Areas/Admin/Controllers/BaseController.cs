@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static SportsAcademy.Areas.Admin.Constants.AdminConstants;
 
 namespace SportsAcademy.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area(AreaName)]
     [Route("Admin/[controller]/[Action]/{id?}")]
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = AdminRolleName)]
 
     public class BaseController : Controller
     {

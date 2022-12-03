@@ -1,0 +1,36 @@
+﻿ @model MySportMembershipViewModel
+
+@{
+    ViewBag.Title = "My Memberships";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<h4>My Added Memberships</h4>
+
+@if (!Model.AddedMemberships.Any())
+{
+    <h2 class="text-center">You have no added memberships yet!</h2>
+}
+
+<div class="row">
+    @foreach (var membership in Model.AddedMemberships)
+    {
+        @await Html.PartialAsync("~/Views/Shared/_SportMembershipPartial.cshtml", membership)
+    }
+</div>
+
+<h4>My Bought Memberships</h4>
+
+@if (!Model.BoughtMemberships.Any())
+{
+    <h2 class="text-center">You have no bought memberships yet!</h2>
+}
+
+<div class="row">
+    @foreach (var membership in Model.BoughtMemberships)
+    {
+        @await Html.PartialAsync("~/Views/Shared/_SportMembershipPartial.cshtml", membership)
+    }
+</div>

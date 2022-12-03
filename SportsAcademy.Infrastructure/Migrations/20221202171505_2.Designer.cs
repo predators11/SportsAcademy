@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportsAcademy.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using SportsAcademy.Infrastructure.Data;
 namespace SportsAcademy.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221202171505_2")]
+    partial class _2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,7 +27,6 @@ namespace SportsAcademy.Infrastructure.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -103,12 +104,10 @@ namespace SportsAcademy.Infrastructure.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .ValueGeneratedOnAdd()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .ValueGeneratedOnAdd()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
@@ -129,11 +128,9 @@ namespace SportsAcademy.Infrastructure.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("RoleId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("UserId", "RoleId");
@@ -146,16 +143,13 @@ namespace SportsAcademy.Infrastructure.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .ValueGeneratedOnAdd()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .ValueGeneratedOnAdd()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
@@ -170,7 +164,6 @@ namespace SportsAcademy.Infrastructure.Migrations
             modelBuilder.Entity("SportsAcademy.Infrastructure.Data.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
@@ -248,14 +241,14 @@ namespace SportsAcademy.Infrastructure.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b3bc89a3-9f17-412d-93aa-c3607dd18b31",
+                            ConcurrencyStamp = "c5081a56-8834-4510-84d2-58d03bc7599f",
                             Email = "member@mail.com",
                             EmailConfirmed = false,
                             IsActive = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "member@mail.com",
                             NormalizedUserName = "member@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAzmbEX7E3iCekCUYaHFAH+EKFGAjL/wHHEB4/IHz43mrBNIzUKwLIhqrM3Btvwoww==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELVfS1bbkG1cZLyw1vkQtCFE7EITi6pU3ZKdDsQ7EDx0GNfYT9DPDmZoX+Ms4tiaoA==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "member@mail.com"
@@ -264,14 +257,14 @@ namespace SportsAcademy.Infrastructure.Migrations
                         {
                             Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bc106e2c-a0b1-4210-b98f-2a13735b076c",
+                            ConcurrencyStamp = "4db1aa1f-7d5e-44d0-9092-452cd30e0f63",
                             Email = "guest@mail.com",
                             EmailConfirmed = false,
                             IsActive = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "guest@mail.com",
                             NormalizedUserName = "guest@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEvFyKhgte/pkzruUh7cWc0gC9lqKLocn6RDtkj4HbY72RpNEJUGri2Km0jyr8SdRw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKKIEAVSGL2M6J3s5q++RLpBLJVteQdwVVZHiUWMGfpknng8K3+RWJXsZjy9K7Q0fA==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "guest@mail.com"

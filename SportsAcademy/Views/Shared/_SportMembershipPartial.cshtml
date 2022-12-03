@@ -11,25 +11,26 @@
             </h6>
             <h6>(@(Model.IsBought ? "Bought" : "Not Bought"))</h6>
             <br />
-            <a asp-controller="SportMembership" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-success">Details</a>
+            <a asp-area="" asp-controller="SportMembership" asp-action="Details" asp-route-id="@Model.Id"
+            class="btn btn-success">Details</a>
                
             @if (this.User.Identity.IsAuthenticated)
             {
-                <a asp-controller="SportMembership" asp-action="Edit" asp-route-id="@Model.Id"
+                <a asp-area="" asp-controller="SportMembership" asp-action="Edit" asp-route-id="@Model.Id"
                class="btn btn-warning">Edit</a>
-                <a asp-controller="SportMembership" asp-action="Delete" asp-route-id="@Model.Id"
+                <a asp-area="" asp-controller="SportMembership" asp-action="Delete" asp-route-id="@Model.Id"
                class="btn btn-danger">Delete</a>
                 <p></p>
                 @if (!Model.IsBought)
                 {
-                    <form class="input-group-sm" asp-controller="SportMembership"
+                    <form class="input-group-sm" asp-area="" asp-controller="SportMembership"
                   asp-action="Buy" asp-route-id="@Model.Id" method="post">
                         <input class="btn btn-primary" type="submit" value="Buy" />
                     </form>
                 }
                 else
                 {
-                    <form asp-controller="SportMembership" asp-action="Cancel"
+                    <form asp-area="" asp-controller="SportMembership" asp-action="Cancel"
                   asp-route-id="@Model.Id" method="post">
                         <input class="btn btn-primary" type="submit" value="Cancel" />
                     </form>

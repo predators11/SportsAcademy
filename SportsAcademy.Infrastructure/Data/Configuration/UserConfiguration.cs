@@ -4,33 +4,37 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace SportsAcademy.Infrastructure.Data.Configuration
 {
-    public class UserConfiguration : IEntityTypeConfiguration<IdentityUser>
+    public class UserConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {
-        public void Configure(EntityTypeBuilder<IdentityUser> builder)
+        public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
+            builder
+                .Property(p => p.IsActive)
+                .HasDefaultValue(true);
+
             builder.HasData(CreateUsers());
         }
 
-        private List<IdentityUser> CreateUsers()
+        private List<ApplicationUser> CreateUsers()
         {
-            var users = new List<IdentityUser>();
-            var hasher = new PasswordHasher<IdentityUser>();
+            var users = new List<ApplicationUser>();
+            var hasher = new PasswordHasher<ApplicationUser>();
 
-            var user = new IdentityUser()
+            var user = new ApplicationUser()
             {
                 Id = "dea12856-c198-4129-b3f3-b893d8395082",
-                UserName = "player@mail.com",
-                NormalizedUserName = "player@mail.com",
-                Email = "player@mail.com",
-                NormalizedEmail = "player@mail.com"
+                UserName = "member@mail.com",
+                NormalizedUserName = "member@mail.com",
+                Email = "member@mail.com",
+                NormalizedEmail = "member@mail.com"
             };
 
             user.PasswordHash =
-                 hasher.HashPassword(user, "player123");
+                 hasher.HashPassword(user, "member123");
 
             users.Add(user);
 
-            user = new IdentityUser()
+            user = new ApplicationUser()
             {
                 Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                 UserName = "guest@mail.com",
@@ -46,5 +50,6 @@ namespace SportsAcademy.Infrastructure.Data.Configuration
 
             return users;
         }
+
     }
 }
