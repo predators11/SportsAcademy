@@ -20,7 +20,6 @@ namespace SportsAcademy.Infrastructure.Data
             builder.ApplyConfiguration(new MemberConfiguration());
             builder.ApplyConfiguration(new SportMembershipConfiguration());
             builder.ApplyConfiguration(new TrainerConfiguration());
-            builder.ApplyConfiguration(new ShopConfiguration());
             builder.ApplyConfiguration(new TournamentConfiguration());
             builder.ApplyConfiguration(new SportingHallConfiguration());
             builder.ApplyConfiguration(new CategoryConfiguration());
@@ -39,8 +38,6 @@ namespace SportsAcademy.Infrastructure.Data
         public DbSet<SportMembership> SportMemberships { get; set; } = null!;
 
         public DbSet<Member> Members { get; set; } = null!;
-
-        public DbSet<Shop> Shops { get; set; } = null!;
 
         public DbSet<SportingHall> SportingHalls { get; set; } = null!;
 

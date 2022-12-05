@@ -19,7 +19,8 @@ namespace SportsAcademy.Infrastructure.Data.Configuration
                     Id = 1,
                     FirstName = "Ivailo",
                     LastName = "Dobrev",
-                    TrainingExpirience = "2 years"
+                    TrainingExpirience = "5 years",
+                    CategoryId = 1
                 },
 
                 new Trainer()
@@ -27,7 +28,8 @@ namespace SportsAcademy.Infrastructure.Data.Configuration
                     Id = 2,
                     FirstName = "Stoqn",
                     LastName = "Manev",
-                    TrainingExpirience = "5 years"
+                    TrainingExpirience = "7 years",
+                    CategoryId = 2
                 },
 
                 new Trainer()
@@ -35,7 +37,8 @@ namespace SportsAcademy.Infrastructure.Data.Configuration
                     Id = 3,
                     FirstName = "Tenko",
                     LastName = "Cakov",
-                    TrainingExpirience = "10 years"
+                    TrainingExpirience = "10 years",
+                    CategoryId = 3
                 }
              };
 

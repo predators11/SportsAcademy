@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportsAcademy.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using SportsAcademy.Infrastructure.Data;
 namespace SportsAcademy.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221205221434_8")]
+    partial class _8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -248,14 +250,14 @@ namespace SportsAcademy.Infrastructure.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "800798c6-4c87-4867-89b2-63aafbd65aa5",
+                            ConcurrencyStamp = "30d41d00-d897-43bb-9110-145e929e6a9c",
                             Email = "member@mail.com",
                             EmailConfirmed = false,
                             IsActive = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "member@mail.com",
                             NormalizedUserName = "member@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPciODuillWM3i4T9xjUbIv95vK9wWBxEMXA8xz73YzImWFVBTqQB6A2AoMoD59oeA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJpbPJrKLuetW7cm51IIEP8nDr7A11s9L3lXfoEqzRN4K2Ngas6H6Dmx5L218lvfkA==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "member@mail.com"
@@ -264,14 +266,14 @@ namespace SportsAcademy.Infrastructure.Migrations
                         {
                             Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4a40a374-b427-4e10-aba6-8794db3136c0",
+                            ConcurrencyStamp = "df9c49e9-5253-4a6f-a37e-06ea6023c6c7",
                             Email = "guest@mail.com",
                             EmailConfirmed = false,
                             IsActive = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "guest@mail.com",
                             NormalizedUserName = "guest@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEJZfGixRUZDybCF9/dV3pizAVeJqLgNHmIOhL4k4sux6ArXIIRET/yVsarshiC7dA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPbghXpxEjUjnUyRyqdBD82m/emBqMa4bgysDKewlESAJ2YtBOPifqFic8A5qkJshA==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "guest@mail.com"
@@ -354,6 +356,41 @@ namespace SportsAcademy.Infrastructure.Migrations
                             LastName = "Petkov",
                             PhoneNumber = "+359123456789",
                             UserId = "dea12856-c198-4129-b3f3-b893d8395082"
+                        });
+                });
+
+            modelBuilder.Entity("SportsAcademy.Infrastructure.Data.Shop", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<decimal>("BallsPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ClothingPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("RacketsPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("RobotsPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Shops");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BallsPrice = 5.00m,
+                            ClothingPrice = 100.00m,
+                            RacketsPrice = 50.00m,
+                            RobotsPrice = 300.00m
                         });
                 });
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using SportsAcademy.Core.Contracts;
 using SportsAcademy.Core.Exceptions;
 using SportsAcademy.Core.Models.SportMembership;
@@ -13,12 +14,13 @@ namespace SportsAcademy.Core.Services
 
         private readonly IGuard guard;
 
-        public SportMembershipService(
-            IRepository _repo,
-            IGuard _guard)
+        private readonly ILogger logger;
+
+        public SportMembershipService(IRepository _repo, IGuard _guard, ILogger<SportMembershipService> _logger)
         {
             repo = _repo;
             guard = _guard;
+            logger = _logger;
         }
 
         public async Task<SportMembershipQueryModel> All(string? category = null, string? searchTerm = null, SportMembershipSorting sorting = SportMembershipSorting.Newest, int currentPage = 1, int sportMembershipsPerPage = 1)
@@ -139,8 +141,16 @@ namespace SportsAcademy.Core.Services
                 MemberId = memberId
             };
 
-            await repo.AddAsync(membership);
-            await repo.SaveChangesAsync();
+            try
+            {
+                await repo.AddAsync(membership);
+                await repo.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(nameof(Create), ex);
+                throw new ApplicationException("Database failed to save info", ex);
+            }
 
             return membership.Id;
         }
@@ -150,7 +160,15 @@ namespace SportsAcademy.Core.Services
             var membership = await repo.GetByIdAsync<SportMembership>(membershipId);
             membership.IsActive = false;
 
-            await repo.SaveChangesAsync();
+            try
+            {
+                await repo.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(nameof(Create), ex);
+                throw new ApplicationException("Failed to delete", ex);
+            }
         }
 
         public async Task Edit(int membershipId, SportMembershipModel model)

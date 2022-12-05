@@ -17,6 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IMemberService, MemberService>();
             services.AddScoped<IGuard, Guard>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITrainerService, TrainerService>();
 
             return services;
         }

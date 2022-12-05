@@ -1,13 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SportsAcademy.Infrastructure.Data
+namespace SportsAcademy.Core.Models.Trainer
 {
-    public class Trainer
+    public class AddTrainerViewModel
     {
-        [Key]
-        public int Id { get; set; }
-
         [Required]
         [StringLength(50)]
         public string FirstName { get; set; } = null!;
@@ -22,10 +18,5 @@ namespace SportsAcademy.Infrastructure.Data
 
         [Required]
         public int CategoryId { get; set; }
-
-        [ForeignKey(nameof(CategoryId))]
-        public Category Category { get; set; } = null!;
-
-        public bool IsActive { get; set; } = true;
     }
 }

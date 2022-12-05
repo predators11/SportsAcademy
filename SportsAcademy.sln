@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportsAcademy.Core", "Sport
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportsAcademy.Infrastructure", "SportsAcademy.Infrastructure\SportsAcademy.Infrastructure.csproj", "{46025FFE-75E0-46D9-8CBC-9E75210811F1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportsAcademy.UnitTests", "SportsAcademy.UnitTests\SportsAcademy.UnitTests.csproj", "{276ACC84-AE64-4E1A-BF7C-E301C76C2E7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportsAcademy.Tests", "SportsAcademy.UnitTests\SportsAcademy.Tests.csproj", "{276ACC84-AE64-4E1A-BF7C-E301C76C2E7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

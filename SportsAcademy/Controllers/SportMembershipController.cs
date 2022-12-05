@@ -14,11 +14,15 @@ namespace SportsAcademy.Controllers
 
         private readonly IMemberService memberService;
 
-        public SportMembershipController(ISportMembershipService _sportMembershipService, IMemberService _memberService)
+        private readonly ILogger logger;
+
+        public SportMembershipController(ISportMembershipService _sportMembershipService, IMemberService _memberService, ILogger<SportMembershipController> _logger)
         {
             sportMembershipService = _sportMembershipService;
             memberService = _memberService;
+            logger = _logger;
         }
+
 
         [HttpGet]
         [AllowAnonymous]
@@ -127,6 +131,8 @@ namespace SportsAcademy.Controllers
 
             if (!User.IsInRole(AdminRolleName) && (await sportMembershipService.HasMemberWithId(id, User.Id())) == false)
             {
+                logger.LogInformation("User with id {0} attempted to open other member membership", User.Id());
+
                 return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
             }
 

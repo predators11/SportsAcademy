@@ -1,0 +1,22 @@
+﻿@model IEnumerable<TrainerViewModel>
+
+@{
+    ViewBag.Title = "Trainers";
+}
+
+<div class="text-center row">
+    @foreach (var trainer in Model)
+    {
+        <div class="card col-4" style="width: 20rem;">
+            <img class="card-img-top" style="width: 18rem;"
+             src="@trainer.LastName" alt="Trainer">
+            <div class="card-body">
+
+                <h5 class="card-title mt-1">@trainer.TrainingExpirience</h5>
+                <p class="mb-0">FirstName: @trainer.FirstName</p>
+                <p class="mb-0">LastName: @trainer.LastName</p>
+                <p>Genre: @trainer.Category</p>
+            </div>
+        </div>
+    }
+</div>

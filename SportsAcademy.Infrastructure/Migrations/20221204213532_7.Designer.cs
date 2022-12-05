@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportsAcademy.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using SportsAcademy.Infrastructure.Data;
 namespace SportsAcademy.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221204213532_7")]
+    partial class _7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -248,14 +250,14 @@ namespace SportsAcademy.Infrastructure.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "800798c6-4c87-4867-89b2-63aafbd65aa5",
+                            ConcurrencyStamp = "5647b7ed-76e5-4b9f-91d1-d92cc06e30e3",
                             Email = "member@mail.com",
                             EmailConfirmed = false,
                             IsActive = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "member@mail.com",
                             NormalizedUserName = "member@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPciODuillWM3i4T9xjUbIv95vK9wWBxEMXA8xz73YzImWFVBTqQB6A2AoMoD59oeA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECdKUujdli5WT7wNSk/BDsuqfhjlzNJM1rpDPh6xmTe0XbYyQCJ4DxnfXw12CCSOlQ==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "member@mail.com"
@@ -264,14 +266,14 @@ namespace SportsAcademy.Infrastructure.Migrations
                         {
                             Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4a40a374-b427-4e10-aba6-8794db3136c0",
+                            ConcurrencyStamp = "9e9e90a7-8d80-4c1f-bc6c-2ebf31e7be7d",
                             Email = "guest@mail.com",
                             EmailConfirmed = false,
                             IsActive = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "guest@mail.com",
                             NormalizedUserName = "guest@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEJZfGixRUZDybCF9/dV3pizAVeJqLgNHmIOhL4k4sux6ArXIIRET/yVsarshiC7dA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECe752WqtUv/1UM0Kna8hMKbPiHV1E/roG0Ud91StECxxNfGjQIN4jM+w1BjnixTTA==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "guest@mail.com"
@@ -354,6 +356,41 @@ namespace SportsAcademy.Infrastructure.Migrations
                             LastName = "Petkov",
                             PhoneNumber = "+359123456789",
                             UserId = "dea12856-c198-4129-b3f3-b893d8395082"
+                        });
+                });
+
+            modelBuilder.Entity("SportsAcademy.Infrastructure.Data.Shop", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<decimal>("BallsPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ClothingPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("RacketsPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("RobotsPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Shops");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BallsPrice = 5.00m,
+                            ClothingPrice = 100.00m,
+                            RacketsPrice = 50.00m,
+                            RobotsPrice = 300.00m
                         });
                 });
 
@@ -569,9 +606,6 @@ namespace SportsAcademy.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -594,7 +628,6 @@ namespace SportsAcademy.Infrastructure.Migrations
                             Id = 1,
                             CategoryId = 1,
                             FirstName = "Ivailo",
-                            IsActive = true,
                             LastName = "Dobrev",
                             TrainingExpirience = "5 years"
                         },
@@ -603,7 +636,6 @@ namespace SportsAcademy.Infrastructure.Migrations
                             Id = 2,
                             CategoryId = 2,
                             FirstName = "Stoqn",
-                            IsActive = true,
                             LastName = "Manev",
                             TrainingExpirience = "7 years"
                         },
@@ -612,7 +644,6 @@ namespace SportsAcademy.Infrastructure.Migrations
                             Id = 3,
                             CategoryId = 3,
                             FirstName = "Tenko",
-                            IsActive = true,
                             LastName = "Cakov",
                             TrainingExpirience = "10 years"
                         });
