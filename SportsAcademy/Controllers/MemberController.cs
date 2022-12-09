@@ -4,6 +4,7 @@ using SportsAcademy.Core.Constants;
 using SportsAcademy.Core.Contracts;
 using SportsAcademy.Core.Models.Member;
 using SportsAcademy.Extensions;
+using SportsAcademy.Infrastructure.Data;
 
 namespace SportsAcademy.Controllers
 {

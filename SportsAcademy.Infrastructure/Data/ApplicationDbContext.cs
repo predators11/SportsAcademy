@@ -16,6 +16,7 @@ namespace SportsAcademy.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new MemberConfiguration());
             builder.ApplyConfiguration(new SportMembershipConfiguration());
