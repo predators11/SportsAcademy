@@ -1,8 +1,10 @@
 ﻿using SportsAcademy.Core.Contracts;
 using SportsAcademy.Core.Contracts.Admin;
+using SportsAcademy.Core.Contracts.Users;
 using SportsAcademy.Core.Exceptions;
 using SportsAcademy.Core.Services;
 using SportsAcademy.Core.Services.Admin;
+using SportsAcademy.Core.Services.Users;
 using SportsAcademy.Infrastructure.Data.Common;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -17,6 +19,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IMemberService, MemberService>();
             services.AddScoped<IGuard, Guard>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<ITrainerService, TrainerService>();
 
             return services;

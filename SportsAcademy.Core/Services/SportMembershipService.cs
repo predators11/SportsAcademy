@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SportsAcademy.Core.Contracts;
+using SportsAcademy.Core.Contracts.Users;
 using SportsAcademy.Core.Exceptions;
 using SportsAcademy.Core.Models.SportMembership;
 using SportsAcademy.Infrastructure.Data;
@@ -16,11 +17,14 @@ namespace SportsAcademy.Core.Services
 
         private readonly ILogger logger;
 
-        public SportMembershipService(IRepository _repo, IGuard _guard, ILogger<SportMembershipService> _logger)
+        private readonly IUsersService users;
+
+        public SportMembershipService(IRepository _repo, IGuard _guard, ILogger<SportMembershipService> _logger, IUsersService _users)
         {
             repo = _repo;
             guard = _guard;
             logger = _logger;
+            users = _users;
         }
 
         public async Task<SportMembershipQueryModel> All(string? category = null, string? searchTerm = null, SportMembershipSorting sorting = SportMembershipSorting.Newest, int currentPage = 1, int sportMembershipsPerPage = 1)

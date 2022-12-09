@@ -26,6 +26,11 @@ namespace SportsAcademy.Infrastructure.Data.Common
             return this.Context.Set<T>();
         }
 
+        public Repository(ApplicationDbContext context)
+        {
+            Context = context;
+        }
+
         /// <summary>
         /// Adds entity to the database
         /// </summary>
