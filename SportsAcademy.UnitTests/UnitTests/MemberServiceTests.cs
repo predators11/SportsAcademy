@@ -1,87 +1,172 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
 using SportsAcademy.Core.Contracts;
 using SportsAcademy.Core.Services;
 using SportsAcademy.Infrastructure.Data;
 using SportsAcademy.Infrastructure.Data.Common;
-using SportsAcademy.Tests.DbContext;
 
 namespace SportsAcademy.Tests.UnitTests
 {
     public class MemberServiceTests
     {
-        private ServiceProvider serviceProvider;
-        private InMemoryDbContext dbContext;
+        private IRepository repo;
+        private ApplicationDbContext applicationDbContext;
+        private IMemberService memberService;
 
         [SetUp]
         public async Task SetUp()
         {
-            dbContext = new InMemoryDbContext();
-            var serviceCollection = new ServiceCollection();
+            var contextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase("memberDB")
+                .Options;
 
-            serviceProvider = serviceCollection
-                .AddSingleton(sp => dbContext.CreateContext())
-                .AddSingleton<IRepository, Repository>()
-                .AddSingleton<IMemberService, MemberService>()
-                .BuildServiceProvider();
+            applicationDbContext = new ApplicationDbContext(contextOptions);
 
-            var repo = serviceProvider.GetService<IRepository>();
-            await SeedDbAsync(repo);
+            applicationDbContext.Database.EnsureDeleted();
+            applicationDbContext.Database.EnsureCreated();
         }
 
         [Test]
-        public void CreateMemberIsValid()
+        public async Task TestMemberCreate()
         {
-            var firstName = "Cako";
-            var lastName = "Cakov";
-            var userId = "userId";
-            var phoneNumber = "0893555555";
+            var repo = new Repository(applicationDbContext);
+            memberService = new MemberService(repo);
 
-            var member = new Member()
+            await repo.AddAsync(new Member()
             {
-                FirstName = firstName,
-                LastName = lastName,
-                UserId = userId,
-                PhoneNumber = phoneNumber
-            };
+                FirstName = "da1",
+                LastName = "da2",
+                UserId = "da3",
+                PhoneNumber = "da4"
+            });
 
-            var service = serviceProvider.GetService<IMemberService>();
+            await repo.SaveChangesAsync();
 
-            Assert.DoesNotThrowAsync(async () => await service.Create(firstName, lastName, userId, phoneNumber));
+            await memberService.Create("da1", "da2", "da3", "da4");
+
+            var dbMember = await repo.GetByIdAsync<Member>(1);
+
+            Assert.That(dbMember.FirstName, Is.EqualTo("da1"));
         }
 
         [Test]
-        public void ExistsByIdWorks()
+        public async Task TestExistsByIdAndGetByMemberId()
         {
-            //var userId = "userId";
-            //var service = serviceProvider.GetService<IMemberService>();
-            //var result = service.ExistsById(Member.UserId);           
+            var repo = new Repository(applicationDbContext);
+            memberService = new MemberService(repo);
 
-            //Assert.IsTrue(result);
+            await repo.AddAsync(new Member()
+            {
+                FirstName = "da1",
+                LastName = "da2",
+                UserId = "da3",
+                PhoneNumber = "da4"
+            });
+
+            await repo.SaveChangesAsync();
+            await memberService.ExistsById("da3");
+            await memberService.GetMemberId("da3");
+            var dbMember = await repo.All<Member>()
+                .AnyAsync(a => a.UserId == "da3");
+
+            Assert.IsTrue(dbMember);
+        }
+
+        [Test]
+        public async Task TestUserHasBuys()
+        {
+            var repo = new Repository(applicationDbContext);
+            memberService = new MemberService(repo);
+
+            await repo.AddAsync(new Member()
+            {
+                FirstName = "da1",
+                LastName = "da2",
+                UserId = "da3",
+                PhoneNumber = "da4"
+            });
+
+            await repo.SaveChangesAsync();
+
+            await memberService.UserHasBuys("da3");
+
+            var dbMember = await repo.GetByIdAsync<Member>(1);
+
+            Assert.That(dbMember.UserId, Is.EqualTo("da3"));
+        }
+
+        [Test]
+        public async Task TestUserWithPhoneNumberExists()
+        {
+            var repo = new Repository(applicationDbContext);
+            memberService = new MemberService(repo);
+
+            await repo.AddAsync(new Member()
+            {
+                FirstName = "da1",
+                LastName = "da2",
+                UserId = "da3",
+                PhoneNumber = "da4"
+            });
+
+            await repo.SaveChangesAsync();
+
+            await memberService.UserWithPhoneNumberExists("da4");
+
+            var dbMember = await repo.GetByIdAsync<Member>(1);
+
+            Assert.That(dbMember.PhoneNumber, Is.EqualTo("da4"));
+        }
+
+        [Test]
+        public async Task TestUserWithFirstNameExists()
+        {
+            var repo = new Repository(applicationDbContext);
+            memberService = new MemberService(repo);
+
+            await repo.AddAsync(new Member()
+            {
+                FirstName = "da1",
+                LastName = "da2",
+                UserId = "da3",
+                PhoneNumber = "da4"
+            });
+
+            await repo.SaveChangesAsync();
+
+            await memberService.UserWithFirstNameExists("da1");
+
+            var dbMember = await repo.GetByIdAsync<Member>(1);
+
+            Assert.That(dbMember.FirstName, Is.EqualTo("da1"));
+        }
+
+        [Test]
+        public async Task TestUserWithLastNameExists()
+        {
+            var repo = new Repository(applicationDbContext);
+            memberService = new MemberService(repo);
+
+            await repo.AddAsync(new Member()
+            {
+                FirstName = "da1",
+                LastName = "da2",
+                UserId = "da3",
+                PhoneNumber = "da4"
+            });
+
+            await repo.SaveChangesAsync();
+
+            await memberService.UserWithLastNameExists("da2");
+
+            var dbMember = await repo.GetByIdAsync<Member>(1);
+
+            Assert.That(dbMember.LastName, Is.EqualTo("da2"));
         }
 
         [TearDown]
         public void TearDown()
         {
-            dbContext.Dispose();
+            applicationDbContext.Dispose();
         }
-
-        private async Task SeedDbAsync(IRepository repo)
-        {
-            var firstName = "Cako";
-            var lastName = "Cakov";
-            var userId = "userId";
-            var phoneNumber = "0893555555";
-
-            var member = new Member()
-            {
-                FirstName = firstName,
-                LastName = lastName,
-                UserId = userId,
-                PhoneNumber = phoneNumber
-            };
-
-            await repo.AddAsync(member);
-            await repo.SaveChangesAsync();
-        }
-    }
+    }    
 }

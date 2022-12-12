@@ -15,6 +15,10 @@ namespace SportsAcademy.Core.Services
             repo = _repo;
         }
 
+        /// <summary>
+        /// Showing the halls where members can train their skills
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<SportingHallModel>> BestSportingHalls()
         {
             return await repo.AllReadonly<SportingHall>()

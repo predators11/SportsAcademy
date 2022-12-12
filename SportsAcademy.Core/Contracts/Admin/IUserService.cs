@@ -7,5 +7,7 @@ namespace SportsAcademy.Core.Contracts.Admin
         Task<string> UserFullName(string userId);
 
         Task<IEnumerable<UserServiceModel>> All();
+
+        Task<bool> Forget(string userId);
     }
 }

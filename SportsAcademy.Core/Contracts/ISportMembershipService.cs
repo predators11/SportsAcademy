@@ -8,7 +8,7 @@ namespace SportsAcademy.Core.Contracts
 
         Task<bool> CategoryExists(int categoryId);
 
-        Task<int> Create(SportMembershipModel model, int agentId);
+        Task<int> Create(SportMembershipModel model, int memberId);
 
         Task<SportMembershipQueryModel> All(
             string? category = null,

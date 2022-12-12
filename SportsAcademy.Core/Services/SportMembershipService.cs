@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SportsAcademy.Core.Contracts;
-using SportsAcademy.Core.Contracts.Users;
 using SportsAcademy.Core.Exceptions;
 using SportsAcademy.Core.Models.SportMembership;
 using SportsAcademy.Infrastructure.Data;
@@ -17,16 +16,22 @@ namespace SportsAcademy.Core.Services
 
         private readonly ILogger logger;
 
-        private readonly IUsersService users;
-
-        public SportMembershipService(IRepository _repo, IGuard _guard, ILogger<SportMembershipService> _logger, IUsersService _users)
+        public SportMembershipService(IRepository _repo, IGuard _guard, ILogger<SportMembershipService> _logger)
         {
             repo = _repo;
             guard = _guard;
             logger = _logger;
-            users = _users;
         }
 
+        /// <summary>
+        /// Showing all the available memberships
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="searchTerm"></param>
+        /// <param name="sorting"></param>
+        /// <param name="currentPage"></param>
+        /// <param name="sportMembershipsPerPage"></param>
+        /// <returns></returns>
         public async Task<SportMembershipQueryModel> All(string? category = null, string? searchTerm = null, SportMembershipSorting sorting = SportMembershipSorting.Newest, int currentPage = 1, int sportMembershipsPerPage = 1)
         {
             var result = new SportMembershipQueryModel();
@@ -69,12 +74,16 @@ namespace SportsAcademy.Core.Services
                     Title = m.Title
                 })
                 .ToListAsync();
-
+            
             result.TotalSportMembershipsCount = await memberships.CountAsync();
 
             return result;
         }
 
+        /// <summary>
+        /// Showing All the availabe categories
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<SportMembershipCategoryModel>> AllCategories()
         {
             return await repo.AllReadonly<Category>()
@@ -87,6 +96,10 @@ namespace SportsAcademy.Core.Services
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Showing the names of All the availabe categories
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<string>> AllCategoriesNames()
         {
             return await repo.AllReadonly<Category>()
@@ -95,6 +108,11 @@ namespace SportsAcademy.Core.Services
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Taking the memberships with memberId
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<SportMembershipServiceModel>> AllSportMembershipsByMemberId(int id)
         {
             return await repo.AllReadonly<SportMembership>()
@@ -111,6 +129,11 @@ namespace SportsAcademy.Core.Services
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Taking the memberships with userId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<SportMembershipServiceModel>> AllSportMembershipsByUserId(string userId)
         {
             return await repo.AllReadonly<SportMembership>()
@@ -127,12 +150,24 @@ namespace SportsAcademy.Core.Services
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Checking if the category exists with the current categoryId
+        /// </summary>
+        /// <param name="categoryId"></param>
+        /// <returns></returns>
         public async Task<bool> CategoryExists(int categoryId)
         {
             return await repo.AllReadonly<Category>()
                 .AnyAsync(c => c.Id == categoryId);
         }
 
+        /// <summary>
+        /// Add membership to the repo
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="memberId"></param>
+        /// <returns></returns>
+        /// <exception cref="ApplicationException"></exception>
         public async Task<int> Create(SportMembershipModel model, int memberId)
         {
             var membership = new SportMembership()
@@ -159,6 +194,12 @@ namespace SportsAcademy.Core.Services
             return membership.Id;
         }
 
+        /// <summary>
+        /// Deleting the membership
+        /// </summary>
+        /// <param name="membershipId"></param>
+        /// <returns></returns>
+        /// <exception cref="ApplicationException"></exception>
         public async Task Delete(int membershipId)
         {
             var membership = await repo.GetByIdAsync<SportMembership>(membershipId);
@@ -175,6 +216,12 @@ namespace SportsAcademy.Core.Services
             }
         }
 
+        /// <summary>
+        /// Editing the membership
+        /// </summary>
+        /// <param name="membershipId"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public async Task Edit(int membershipId, SportMembershipModel model)
         {
             var membership = await repo.GetByIdAsync<SportMembership>(membershipId);
@@ -188,17 +235,33 @@ namespace SportsAcademy.Core.Services
             await repo.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Checking if the membership exists with the current id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<bool> Exists(int id)
         {
             return await repo.AllReadonly<SportMembership>()
                 .AnyAsync(m => m.Id == id && m.IsActive);
         }
 
+        /// <summary>
+        /// Taking the membership category with the current membershipId
+        /// </summary>
+        /// <param name="membershipId"></param>
+        /// <returns></returns>
         public async Task<int> GetSportMembershipCategoryId(int membershipId)
         {
             return (await repo.GetByIdAsync<SportMembership>(membershipId)).CategoryId;
         }
 
+        /// <summary>
+        /// Checking if there is a member with the current membershipId and currentUserId
+        /// </summary>
+        /// <param name="membershipId"></param>
+        /// <param name="currentUserId"></param>
+        /// <returns></returns>
         public async Task<bool> HasMemberWithId(int membershipId, string currentUserId)
         {
             bool result = false;
@@ -215,7 +278,11 @@ namespace SportsAcademy.Core.Services
 
             return result;
         }
-
+        /// <summary>
+        /// Showing the membership details with the current id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<SportMembershipDetailsModel> SportMembershipDetailsById(int id)
         {
             return await repo.AllReadonly<SportMembership>()
@@ -242,11 +309,22 @@ namespace SportsAcademy.Core.Services
                 .FirstAsync();
         }
 
+        /// <summary>
+        /// Checking if the membership is bought with the current membershipId
+        /// </summary>
+        /// <param name="membershipId"></param>
+        /// <returns></returns>
         public async Task<bool> IsBought(int membershipId)
         {
             return (await repo.GetByIdAsync<SportMembership>(membershipId)).BuyerId != null; 
         }
 
+        /// <summary>
+        /// Checking if the membership is bought with the current membershipId and the current currentUserId
+        /// </summary>
+        /// <param name="membershipId"></param>
+        /// <param name="currentUserId"></param>
+        /// <returns></returns>
         public async Task<bool> IsBoughtByUserWithId(int membershipId, string currentUserId)
         {
             bool result = false;
@@ -263,6 +341,11 @@ namespace SportsAcademy.Core.Services
             return result;
         }
 
+        /// <summary>
+        /// Canceling the already bought membership
+        /// </summary>
+        /// <param name="membershipId"></param>
+        /// <returns></returns>
         public async Task Cancel(int membershipId)
         {
             var membership = await repo.GetByIdAsync<SportMembership>(membershipId);
@@ -272,6 +355,13 @@ namespace SportsAcademy.Core.Services
             await repo.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Buying the membership
+        /// </summary>
+        /// <param name="membershipId"></param>
+        /// <param name="currentUserId"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public async Task Buy(int membershipId, string currentUserId)
         {
             var membership = await repo.GetByIdAsync<SportMembership>(membershipId);
@@ -282,6 +372,7 @@ namespace SportsAcademy.Core.Services
             }
 
             guard.AgainstNull(membership, "Membership can not be found");
+
             membership.BuyerId = currentUserId;
 
             await repo.SaveChangesAsync();

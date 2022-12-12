@@ -18,6 +18,10 @@ namespace SportsAcademy.Controllers
             memberService = _memberService;
         }
 
+        /// <summary>
+        /// Users become members, if they are not already
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Become()
         {
@@ -33,6 +37,11 @@ namespace SportsAcademy.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Users become members, if they are not already
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Become(BecomeMemberModel model)
         {

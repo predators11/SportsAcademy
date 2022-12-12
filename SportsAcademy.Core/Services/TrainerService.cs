@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using SportsAcademy.Core.Contracts;
 using SportsAcademy.Core.Models.Trainer;
 using SportsAcademy.Infrastructure.Data;
@@ -9,20 +8,21 @@ namespace SportsAcademy.Core.Services
 {
     public class TrainerService : ITrainerService
     {
-        private readonly ApplicationDbContext context;
         private readonly IRepository repo;
-        private readonly ILogger logger;
 
-        public TrainerService(ApplicationDbContext _context, IRepository _repo, ILogger<TrainerService> _logger)
+        public TrainerService(IRepository _repo)
         {
-            context = _context;
             repo = _repo;
-            logger = _logger;
         }
 
+        /// <summary>
+        /// Add the trainer to the repository
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public async Task AddTrainerAsync(AddTrainerViewModel model)
         {
-            var entity = new Trainer()
+            var trainer = new Trainer()
             {
                 FirstName = model.FirstName,
                 LastName = model.LastName,
@@ -30,25 +30,26 @@ namespace SportsAcademy.Core.Services
                 CategoryId = model.CategoryId
             };
 
-            await context.Trainers.AddAsync(entity);
-            await context.SaveChangesAsync();
+            await repo.AddAsync(trainer);
+            await repo.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Showing all the availabe trainers
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<TrainerViewModel>> GetAllAsync()
         {
-            var entities = await context.Trainers
-                .Include(t => t.Category)
-                .ToListAsync();
-
-            return entities
+            return await repo.AllReadonly<Trainer>()
+                .OrderBy(c => c.Id)
                 .Select(t => new TrainerViewModel()
                 {
                     FirstName = t.FirstName,
                     LastName = t.LastName,
-                    Category = t?.Category?.Name,
-                    Id = t.Id,                   
+                    Id = t.Id,
                     TrainingExpirience = t.TrainingExpirience
-                });
+                })
+                .ToListAsync();
         }
     }
 }

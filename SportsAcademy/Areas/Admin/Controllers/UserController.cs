@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SportsAcademy.Core.Constants;
 using SportsAcademy.Core.Contracts.Admin;
 
 namespace SportsAcademy.Areas.Admin.Controllers
@@ -17,6 +18,23 @@ namespace SportsAcademy.Areas.Admin.Controllers
             var model = await userService.All();
 
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Forget(string userId)
+        {
+            bool result = await userService.Forget(userId);
+
+            if (result)
+            {
+                TempData[MessageConstant.SuccessMessage] = "User is now forgotten";
+            }
+            else
+            {
+                TempData[MessageConstant.ErrorMessage] = "User is unforgetable";
+            }
+
+            return RedirectToAction(nameof(All));
         }
     }
 }

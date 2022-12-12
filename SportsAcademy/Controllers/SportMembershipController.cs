@@ -23,7 +23,11 @@ namespace SportsAcademy.Controllers
             logger = _logger;
         }
 
-
+        /// <summary>
+        /// Showing all the available memberships
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> All([FromQuery]AllSportMembershipQueryModel query)
@@ -42,6 +46,10 @@ namespace SportsAcademy.Controllers
             return View(query);
         }
 
+        /// <summary>
+        /// Showing the memberships with some conditions
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Mine()
         {
             if (User.IsInRole(AdminRolleName))
@@ -65,6 +73,11 @@ namespace SportsAcademy.Controllers
             return View(myMemberships);
         }
 
+        /// <summary>
+        /// Showing the details for the picked memberships
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
@@ -78,6 +91,10 @@ namespace SportsAcademy.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Adding a memberships
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Add() 
         {
@@ -94,6 +111,11 @@ namespace SportsAcademy.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Adding a memberships
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Add(SportMembershipModel model)
         {
@@ -121,6 +143,11 @@ namespace SportsAcademy.Controllers
             return RedirectToAction(nameof(Details), new { id });
         }
 
+        /// <summary>
+        /// Editing the memberships
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -158,6 +185,12 @@ namespace SportsAcademy.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Editing the memberships
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Edit(int id, SportMembershipModel model)
         {
@@ -204,6 +237,11 @@ namespace SportsAcademy.Controllers
             return RedirectToAction(nameof(Details), new { model.Id });
         }
 
+        /// <summary>
+        /// Deleting the membership
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -228,7 +266,12 @@ namespace SportsAcademy.Controllers
             return View(model);
         }
 
-
+        /// <summary>
+        /// Deleting the membership
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Delete(int id, SportMembershipDetailsViewModel model)
         {
@@ -247,6 +290,11 @@ namespace SportsAcademy.Controllers
             return RedirectToAction(nameof(All));
         }
 
+        /// <summary>
+        /// Buying the membership
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Buy(int id)
         {
@@ -265,6 +313,11 @@ namespace SportsAcademy.Controllers
             return RedirectToAction(nameof(All));
         }
 
+        /// <summary>
+        /// Canceling the membership
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Cancel(int id)
         {
