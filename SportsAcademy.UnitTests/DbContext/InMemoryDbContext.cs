@@ -26,5 +26,6 @@ namespace SportsAcademy.Tests.DbContext
         public ApplicationDbContext CreateContext() => new ApplicationDbContext(dbContextOptions);
 
         public void Dispose() => connection.Dispose();
+
     }
 }
